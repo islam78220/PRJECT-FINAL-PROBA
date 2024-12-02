@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <title>Choix des Calculs</title>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f5f5f5;
+        }
+
+        .content {
+            text-align: center;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: inline-block;
+            text-align: left;
+            width: 100%;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+
+        select, input[type="checkbox"] {
+            margin-bottom: 15px;
+        }
+
+        .btn-container button {
+            padding: 10px 20px;
+            background-color: #292c30;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+            width: 100%;
+        }
+
+        .btn-container button:hover {
+            background-color: #444;
+        }
+
+        .checkbox-group {
+            text-align: left;
+            margin: 10px 0;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="content">
+        <h1>Choisissez vos calculs</h1>
+        <form method="post" action="{% url 'perform_calculations' %}">
+            {% csrf_token %}
+            
+            <!-- Sélection de la colonne -->
+            <label for="column">Choisissez une colonne :</label>
+            <select name="column" id="column">
+                {% for column in columns %}
+                    <option value="{{ column }}">{{ column }}</option>
+                {% endfor %}
+            </select>
+            
+            <p>Choisissez les calculs à effectuer :</p>
+            
+            <!-- Cases à cocher pour les calculs -->
+            <div class="checkbox-group">
+                <input type="checkbox" name="calculations" value="moyenne"> Moyenne<br>
+                <input type="checkbox" name="calculations" value="mediane"> Médiane<br>
+                <input type="checkbox" name="calculations" value="mode"> Mode<br>
+                <input type="checkbox" name="calculations" value="variance"> Variance<br>
+                <input type="checkbox" name="calculations" value="ecart_type"> Écart-type<br>
+                <input type="checkbox" name="calculations" value="total"> Calcul complet<br>
+            </div>
+            
+            <!-- Bouton de soumission -->
+            <div class="btn-container">
+                <button type="submit">Calculer</button>
+            </div>
+        </form>
+    </div>
+
+</body>
+</html>

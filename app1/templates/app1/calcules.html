@@ -1,0 +1,123 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculs des tendances centrales</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f5f5f5;
+        }
+
+        .content {
+            text-align: center;
+        }
+
+        .button-container a {
+            display: inline-block;
+            padding: 10px 20px;
+            text-decoration: none;
+            color: white;
+            background-color: #292c30;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 16px;
+            margin: 10px 0;
+            transition: background-color 0.3s;
+        }
+
+        .button-container a:hover {
+            background-color: #444;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            width: 250px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #292c30;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #444;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+
+        .result p {
+            font-weight: bold;
+        }
+
+        .error {
+            color: red;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="content">
+        <h1>Calculs des tendances centrales</h1>
+
+        <form method="POST">
+            {% csrf_token %}
+            <label for="valeurs">Veuillez saisir les valeurs SVP (ex: 1,2,3):</label>
+            <br>
+            <input type="text" id="valeurs" name="valeurs" value="{{ valeurs|default:'' }}" placeholder="Entrez des nombres séparés par des virgules">
+            <br><br>
+            <button type="submit">Calculer</button>
+        </form>
+
+        <!-- Affichage des messages d'erreur -->
+        {% if message %}
+            <p class="error">{{ message }}</p>
+        {% endif %}
+
+        <!-- Affichage des résultats -->
+        <div class="result">
+            {% if mean is not none %}
+                <p><strong>Moyenne :</strong> {{ mean }}</p>
+            {% endif %}
+            {% if median is not none %}
+                <p><strong>Médiane :</strong> {{ median }}</p>
+            {% endif %}
+            {% if mode is not none %}
+                <p><strong>Mode :</strong> {{ mode }}</p>
+            {% endif %}
+            {% if variance is not none %}
+                <p><strong>Variance :</strong> {{ variance }}</p>
+            {% endif %}
+            {% if stdev is not none %}
+                <p><strong>Écart-type :</strong> {{ stdev }}</p>
+            {% endif %}
+        </div>
+    </div>
+
+</body>
+</html>
