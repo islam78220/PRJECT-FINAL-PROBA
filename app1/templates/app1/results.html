@@ -70,7 +70,7 @@
         <ul>
             {% for key, value in results.items %}
                 <li>{{ key }} : {{ value }}</li>
-            {% endfor %}
+                {% endfor %}
         </ul>
         <div class="button-container">
             <a href="{% url 'app1-index' %}" class="return-button">Retour</a>

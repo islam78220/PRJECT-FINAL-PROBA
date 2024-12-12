@@ -1,0 +1,28 @@
+{% load static %}
+<html>
+    <head>
+        <title>normal</title>
+        <link rel="stylesheet" type="text/css" href="{% static 'choix_colonnes.css' %}" >
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    </head>
+    <body>
+        <a class="btn_sub" href="{%url 'app1-index'%}">Retour</a>
+        <h1 style="text-align: center;">Loi exponentielle</h1>
+        <form method="post" action="{% url 'afficher_normal' %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label for="mean">Mean (μ):</label>
+            <input type="text" id="mean" name="mean" required>
+            <br>
+            <br>
+            <label for="standard_deviation">Standard Deviation (σ):</label>
+            <input type="text" id="standard_deviation" name="standard_deviation" required>
+            <br>
+            <br>
+            <button type="submit">Calculate</button> 
+        </form>
+        {% if error_message %}
+            <p style="color: red; text-align: center;">{{ error_message }}</p>
+        {% endif %}
+    </body>
+</html>

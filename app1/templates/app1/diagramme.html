@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chart Display</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .card {
+            width: 70%;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden; /* Pour gérer le débordement du contenu */
+        }
+
+        img {
+            display: block;
+            margin: 0 auto; /* Pour centrer l'image à l'intérieur de la carte */
+            max-width: 100%; /* Pour s'assurer que l'image ne dépasse pas la largeur de la carte */
+        }
+    </style>
+</head>
+<body>
+    <a href="{%url 'app1-upload_file'%}">Retour</a>
+    {% if chart %}
+        <div class="card">
+            <img src="data:image/png;base64,{{ chart|safe }}" alt="Chart">
+        </div>
+    {% else %}
+        <!-- Si plot_data est vide, afficher un message -->
+        <p>Aucune donnée de diagramme disponible pour l'instant.</p>
+    {% endif %}
+</body>
+</html>

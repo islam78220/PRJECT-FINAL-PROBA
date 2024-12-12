@@ -1,0 +1,53 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Traitement de Fichier</title>
+        <link rel="stylesheet" type="text/css" href="{% static 'choix_colonnes.css' %}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <script>
+            function toggleSecondColumnVisibility() {
+                var typeChartSelect = document.getElementById('type_chart');
+                var colName2Select = document.getElementById('col_name2');
+            
+                var hideSecondColumn = ['histogram', 'histplot', 'kdeplot'].includes(typeChartSelect.value);
+                colName2Select.style.display = hideSecondColumn ? 'none' : 'inline';
+            }
+            
+        </script>
+    </head>
+    <body>
+        <a class="btn_sub" href="{%url 'app1-upload_file'%}">Retour</a>
+        <h1 style="text-align: center;">Graphe</h1>
+        <form method="post" action="{% url 'visualiser_chart' %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            <select id="type_chart" name="type_chart" onchange="toggleSecondColumnVisibility()">
+                <option value="bar">Barplot</option>
+                <option value="histogram">Histogram</option>
+                <option value="piechart">Piechart</option>
+                <option value="histplot">Histplot</option>
+                <option value="scatterplot">Scatterplot</option>
+                <option value="heatmap">Heatmap</option>
+                <option value="lineplot">Lineplot</option>
+                <option value="boxplot">Boxplot</option>
+                <option value="violinplot">Violinplot</option>
+                <option value="kdeplot">Kdeplot</option>
+            </select>
+            <select id="col_name1" name="col_name1">
+                {% for col in column_names %}
+                    <option value="{{ col }}">{{ col }}</option>
+                {% endfor %}    
+            </select>
+            <select id="col_name2" name="col_name2">
+                {% for col in column_names %}
+                    <option value="{{ col }}">{{ col }}</option>
+                {% endfor %}    
+            </select>
+            <button type="submit">Envoyer</button>
+        </form>
+    {% if error_message %}
+        <p style="color: red; text-align: center;">{{ error_message }}</p>
+    {% endif %}
+    </body>
+</html>

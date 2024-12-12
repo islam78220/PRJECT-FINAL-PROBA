@@ -1,0 +1,28 @@
+{% load static %}
+<html>
+    <head>
+        <title>Uniform</title>
+        <link rel="stylesheet" type="text/css" href="{% static 'choix_colonnes.css' %}" >
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    </head>
+    <body>
+        <a class="btn_sub" href="{%url 'app1-index'%}">Retour</a>
+        <h1 style="text-align: center;">Loi Uniform</h1>
+        <form method="post" action="{% url 'afficher_uniforme' %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label for="min_value">Minimum Value (a):</label>
+            <input type="text" id="min_value" name="min_value" required>
+            <br>
+            <br>
+            <label for="max_value">Maximum Value (b):</label>
+            <input type="text" id="max_value" name="max_value" required>
+            <br>
+            <br>
+            <button type="submit">Calculate</button> 
+        </form>
+        {% if error_message %}
+            <p style="color: red; text-align: center;">{{ error_message }}</p>
+        {% endif %}
+    </body>
+</html>

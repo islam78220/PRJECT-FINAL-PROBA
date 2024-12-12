@@ -1,0 +1,28 @@
+{% load static %}
+<html>
+    <head>
+        <title>Binomial</title>
+        <link rel="stylesheet" type="text/css" href="{% static 'choix_colonnes.css' %}" >
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    </head>
+    <body>
+        <a class="btn_sub" href="{%url 'app1-index'%}">Retour</a>
+        <h1 style="text-align: center;">Loi Binomial</h1>
+        <form method="post" action="{% url 'afficher_binomial' %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label for="probability_of_success">Probability of Success (p):</label>
+            <input type="text" id="probability_of_success" name="probability_of_success" required>
+            <br>
+            <br>
+            <label for="number_of_trials">Number of Trials (n):</label>
+            <input type="text" id="number_of_trials" name="number_of_trials" required>
+            <br>
+            <br>
+            <button type="submit">Calculate</button> 
+        </form>
+        {% if error_message %}
+            <p style="color: red; text-align: center;">{{ error_message }}</p>
+        {% endif %}
+    </body>
+</html>
