@@ -1,4 +1,4 @@
-
+from django.shortcuts import render
 import statistics
 from django.shortcuts import render, redirect
 from scipy.stats import bernoulli
@@ -421,6 +421,8 @@ def generate_chart(df, type_chart, col1, col2):
 
 
 
+def accueil(request):
+    return render(request, 'accueil.html')  
 
 def bernoullii(request):
     return render(request, 'app1/lois/bernoullii.html')
@@ -704,6 +706,10 @@ def afficher_uniforme(request):
     context = {'error_message': error_message}
 
     return render(request, 'app1/lois/uniforme.html', context)
+
+
+
+
 
 
 

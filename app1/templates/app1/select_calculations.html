@@ -52,6 +52,7 @@
             font-size: 16px;
             transition: background-color 0.3s;
             width: 100%;
+            margin-top: 10px;
         }
 
         .btn-container button:hover {
@@ -63,6 +64,21 @@
             margin: 10px 0;
         }
 
+        .btn-retour {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 5px 15px;
+            background-color: #292c30;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        }
+
+        .btn-retour:hover {
+            background-color: #444;
+        }
     </style>
 </head>
 <body>
@@ -97,6 +113,9 @@
                 <button type="submit">Calculer</button>
             </div>
         </form>
+
+        <!-- Bouton de retour plus petit -->
+        <a href="{% url 'app1-index' %}" class="btn-retour">Retour</a>
     </div>
 
 </body>

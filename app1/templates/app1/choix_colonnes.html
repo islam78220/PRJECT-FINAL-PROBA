@@ -1,53 +1,161 @@
 {% load static %}
 
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>Traitement de Fichier</title>
-        <link rel="stylesheet" type="text/css" href="{% static 'choix_colonnes.css' %}">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-        <script>
-            function toggleSecondColumnVisibility() {
-                var typeChartSelect = document.getElementById('type_chart');
-                var colName2Select = document.getElementById('col_name2');
-            
-                var hideSecondColumn = ['histogram', 'histplot', 'kdeplot'].includes(typeChartSelect.value);
-                colName2Select.style.display = hideSecondColumn ? 'none' : 'inline';
-            }
-            
-        </script>
-    </head>
-    <body>
-        <a class="btn_sub" href="{%url 'app1-upload_file'%}">Retour</a>
-        <h1 style="text-align: center;">Graphe</h1>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualisation des Graphiques</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script>
+        function toggleSecondColumnVisibility() {
+            var typeChartSelect = document.getElementById('type_chart');
+            var colName2Select = document.getElementById('col_name2');
+            colName2Select.style.display = ['histogram', 'histplot', 'kdeplot'].includes(typeChartSelect.value) ? 'none' : 'inline';
+        }
+    </script>
+    <style>
+        body { 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            color: #292c30;
+        }
+
+        form {
+            text-align: left;
+            width: 100%;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            color: #292c30;
+        }
+
+        select,
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        select:hover,
+        input[type="text"]:hover {
+            background-color: #f0f0f0;
+        }
+
+        button[type="submit"] {
+            padding: 10px 20px;
+            background-color: #292c30;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+            width: 100%;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #444;
+        }
+
+        .btn-sub-container {
+            margin-top: 20px;
+        }
+
+        .btn-sub-container a {
+            padding: 10px 20px;
+            background-color: #292c30;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 16px;
+            display: inline-block;
+        }
+
+        .btn-sub-container a:hover {
+            background-color: #444;
+        }
+
+        .error-message {
+            color: red;
+            text-align: center;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Création de Graphiques</h1>
         <form method="post" action="{% url 'visualiser_chart' %}" enctype="multipart/form-data">
             {% csrf_token %}
-            <select id="type_chart" name="type_chart" onchange="toggleSecondColumnVisibility()">
-                <option value="bar">Barplot</option>
-                <option value="histogram">Histogram</option>
-                <option value="piechart">Piechart</option>
-                <option value="histplot">Histplot</option>
-                <option value="scatterplot">Scatterplot</option>
-                <option value="heatmap">Heatmap</option>
-                <option value="lineplot">Lineplot</option>
-                <option value="boxplot">Boxplot</option>
-                <option value="violinplot">Violinplot</option>
-                <option value="kdeplot">Kdeplot</option>
-            </select>
-            <select id="col_name1" name="col_name1">
-                {% for col in column_names %}
-                    <option value="{{ col }}">{{ col }}</option>
-                {% endfor %}    
-            </select>
-            <select id="col_name2" name="col_name2">
-                {% for col in column_names %}
-                    <option value="{{ col }}">{{ col }}</option>
-                {% endfor %}    
-            </select>
-            <button type="submit">Envoyer</button>
+            <div class="form-group">
+                <label for="type_chart">Type de Graphique</label>
+                <select id="type_chart" name="type_chart" onchange="toggleSecondColumnVisibility()">
+                    <option value="bar">Barplot</option>
+                    <option value="histogram">Histogramme</option>
+                    <option value="piechart">Piechart</option>
+                    <option value="histplot">Histplot</option>
+                    <option value="scatterplot">Scatterplot</option>
+                    <option value="heatmap">Heatmap</option>
+                    <option value="lineplot">Lineplot</option>
+                    <option value="boxplot">Boxplot</option>
+                    <option value="violinplot">Violinplot</option>
+                    <option value="kdeplot">Kdeplot</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="col_name1">Sélectionner la Première Colonne</label>
+                <select id="col_name1" name="col_name1">
+                    {% for col in column_names %}
+                        <option value="{{ col }}">{{ col }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group" id="col_name2_group">
+                <label for="col_name2">Sélectionner la Deuxième Colonne</label>
+                <select id="col_name2" name="col_name2">
+                    {% for col in column_names %}
+                        <option value="{{ col }}">{{ col }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <button type="submit" class="submit-btn">Créer le Graphique</button>
         </form>
-    {% if error_message %}
-        <p style="color: red; text-align: center;">{{ error_message }}</p>
-    {% endif %}
-    </body>
+
+        {% if error_message %}
+            <div class="error-message">
+                <p>{{ error_message }}</p>
+            </div>
+        {% endif %}
+
+        <div class="btn-sub-container">
+            <a href="{% url 'app1-upload_file' %}">Retour</a>
+        </div>
+    </div>
+</body>
 </html>

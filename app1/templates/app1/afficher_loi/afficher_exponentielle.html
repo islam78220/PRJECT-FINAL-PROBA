@@ -1,15 +1,100 @@
 {% load static %}
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="{% static 'afficher.css' %}">
     <title>Afficher</title>
+    <style>
+        /* Global styles */
+        body { 
+            display: flex;
+            justify-content: center; /* Centre horizontalement */
+            align-items: center; /* Centre verticalement */
+            height: 100vh;
+            margin: 0;
+            background-color: #f5f5f5;
+        }
+
+        .content {
+            text-align: center;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 700px; /* Largeur plus grande pour plus d'espace */
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            color: #292c30; /* Titre en couleur #292c30 */
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #292c30; /* "Graphe" en couleur #292c30 */
+            font-size: 24px; /* Taille du titre ajustée */
+            text-transform: uppercase;
+        }
+
+        .content img {
+            width: 100%; /* L'image prend toute la largeur de son conteneur */
+            max-width: 600px; /* Limite la taille maximale de l'image */
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin: 0 auto; /* Centre l'image */
+        }
+
+        .content img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-container button {
+            padding: 10px 20px;
+            background-color: #292c30;
+            color: white;
+            border-radius: 5px;
+            font-size: 16px;
+            width: 100%;
+            margin-top: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn-container button:hover {
+            background-color: #444; /* Plus foncé au survol */
+        }
+
+        /* Responsive styling */
+        @media (max-width: 768px) {
+            .content {
+                width: 90%; /* Réduit la largeur sur petits écrans */
+                padding: 20px; /* Réduit l'espacement */
+            }
+
+            
+
+            .content img {
+                width: 100%; /* L'image prend toute la largeur sur petits écrans */
+            }
+        }
+    </style>
 </head>
 <body>
-    <h2>Graphe</h2>
-    {% csrf_token %}
-    <img src="data:image/png;base64,{{ chart_image }}" alt="Bernoulli Distribution Chart">
+    <div class="content">
+        <h1>Graphique:Loi Exponentielle</h1> <!-- Titre principal centré -->
+        
+        <!-- Section contenant le titre "Graphe" et l'image -->
+        <img src="data:image/png;base64,{{ chart_image }}" alt="Graphique de la distribution de Bernoulli">
+        
+        <!-- Le bouton "Retour" placé en bas -->
+        <div class="btn-container">
+            <button onclick="window.location.href='{% url 'app1-index' %}'">Retour</button>
+        </div>
+    </div>
 </body>
 </html>
-
